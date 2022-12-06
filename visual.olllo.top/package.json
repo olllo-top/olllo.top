@@ -1,0 +1,37 @@
+{
+  "name": "visual-regex-olllo",
+  "version": "1.0.1",
+  "description": "visualr.olllo is a online tool to visual regex.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "cross-env NODE_ENV=development webpack serve --config ./build/webpack.config.js",
+    "build": "cross-env NODE_ENV=production node build/build.js",
+    "stat": "cross-env NODE_ENV=production webpack --config ./build/webpack.config.js --profile --json > stats.json",
+    "analyzer": "cross-env NODE_ENV=production webpack --config ./build/webpack.analyzer.config.js"
+  },
+  "author": "olllo.top",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.1.3",
+    "css-minimizer-webpack-plugin": "^1.3.0",
+    "html-webpack-plugin": "^5.3.1",
+    "less": "^4.1.1",
+    "less-loader": "^8.0.0",
+    "mini-css-extract-plugin": "^1.3.9",
+    "relax-hash": "^2.0.7",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.26.3",
+    "webpack-bundle-analyzer": "^4.4.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "highlight.js": "^9.12.0",
+    "relax-dom": "^1.0.37",
+    "relax-utils": "^2.1.1",
+    "rxjs": "^6.6.6",
+    "visual-regex": "^2.0.5"
+  }
+}

@@ -1,0 +1,486 @@
+<div id="container"></div>
+
+<script src="https://unpkg.com/@antv/x6/dist/x6.js"></script>
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/@antv/x6/dist/x6.css">
+<script>
+    
+    // #region 注册基础图形
+    X6.Graph.registerNode(
+    'regexNode',
+    {
+        inherit: 'rect',
+        markup: [
+            {
+                tagName: 'rect',
+                selector: 'body',
+            },
+            {
+                tagName: 'rect',
+                selector: 'name-rect',
+            },
+            {
+                tagName: 'rect',
+                selector: 'params-rect',
+            },
+            {
+                tagName: 'rect',
+                selector: 'contents-rect',
+            },
+            {
+                tagName: 'text',
+                selector: 'name-text',
+            },
+            {
+                tagName: 'text',
+                selector: 'params-text',
+            },
+            {
+                tagName: 'text',
+                selector: 'contents-text',
+            },
+        ],
+        attrs: {
+            rect: {
+                width: 160,
+            },
+            body: {
+                stroke: '#fff',
+            },
+            'name-rect': {
+                fill: '#5f95ff',
+                stroke: '#fff',
+                strokeWidth: 0.5,
+            },
+            'params-rect': {
+                fill: '#eff4ff',
+                stroke: '#fff',
+                strokeWidth: 0.5,
+            },
+            'contents-rect': {
+                fill: '#eff4ff',
+                stroke: '#fff',
+                strokeWidth: 0.5,
+            },
+            'name-text': {
+                ref: 'name-rect',
+                refY: 0.5,
+                refX: 0.5,
+                textAnchor: 'middle',
+                fontWeight: 'bold',
+                fill: '#fff',
+                fontSize: 12,
+            },
+            'params-text': {
+                ref: 'params-rect',
+                refY: 0.5,
+                refX: 5,
+                textAnchor: 'left',
+                fill: 'black',
+                fontSize: 10,
+            },
+            'contents-text': {
+                ref: 'contents-rect',
+                refY: 0.5,
+                refX: 5,
+                textAnchor: 'left',
+                fill: 'black',
+                fontSize: 10,
+            },
+        },
+        propHooks(meta) {
+            const { name, params, contents, ...others } = meta
+
+            if (!(name && params && contents)) {
+                return meta
+            }
+
+            const rects = [
+                { type: 'name', text: name },
+                { type: 'params', text: params },
+                { type: 'contents', text: contents },
+            ]
+
+            let offsetY = 0
+            rects.forEach((rect) => {
+                const height = rect.text.length * 12 + 16
+                X6.ObjectExt.setByPath(
+                    others,
+                    `attrs/${rect.type}-text/text`,
+                    rect.text.join('\n'),
+                )
+                X6.ObjectExt.setByPath(others, `attrs/${rect.type}-rect/height`, height)
+                X6.ObjectExt.setByPath(
+                    others,
+                    `attrs/${rect.type}-rect/transform`,
+                    'translate(0,' + offsetY + ')',
+                )
+                offsetY += height
+            })
+
+            others.size = { width: 160, height: offsetY }
+
+            return others
+        },
+    },
+    true,
+    )
+
+    X6.Graph.registerNode(
+    'regexSimpleNode',
+    {
+        inherit: 'rect',
+        markup: [
+            {
+                tagName: 'rect',
+                selector: 'body',
+            },
+            {
+                tagName: 'rect',
+                selector: 'name-rect',
+            },
+            {
+                tagName: 'rect',
+                selector: 'contents-rect',
+            },
+            {
+                tagName: 'text',
+                selector: 'name-text',
+            },
+            {
+                tagName: 'text',
+                selector: 'contents-text',
+            },
+        ],
+        attrs: {
+            rect: {
+                width: 160,
+            },
+            body: {
+                stroke: '#fff',
+            },
+            'name-rect': {
+                fill: '#5f95ff',
+                stroke: '#fff',
+                strokeWidth: 0.5,
+            },
+            'contents-rect': {
+                fill: '#eff4ff',
+                stroke: '#fff',
+                strokeWidth: 0.5,
+            },
+            'name-text': {
+                ref: 'name-rect',
+                refY: 0.5,
+                refX: 0.5,
+                textAnchor: 'middle',
+                fontWeight: 'bold',
+                fill: '#fff',
+                fontSize: 12,
+            },
+            'contents-text': {
+                ref: 'contents-rect',
+                refY: 0.5,
+                refX: 5,
+                textAnchor: 'left',
+                fill: 'black',
+                fontSize: 10,
+            },
+        },
+        tools: [
+        {
+            name: 'button',
+            args: {
+                markup: [
+                {
+                    tagName: 'circle',
+                    selector: 'button',
+                    attrs: {
+                    r: 14,
+                    stroke: '#fe854f',
+                    strokeWidth: 2,
+                    fill: 'white',
+                    cursor: 'pointer',
+                    },
+                },
+                
+                ],
+                x: '100%',
+                y: '100%',
+                offset: { x: -20, y: -20 },
+
+                onClick({ cell, e, x, y }) {
+                    const p = graph.clientToGraph(e.clientX, e.clientY)
+                    cell.addTools([
+                        {
+                            name: 'editableCell',
+                            args: {
+                                x: p.x,
+                                y: p.y,
+                            },
+                        },
+                    ])
+            
+                },
+            },
+            },
+        ],
+        propHooks(meta) {
+            const { name, contents, ...others } = meta
+
+            if (!(name && contents)) {
+                return meta
+            }
+
+            const rects = [
+                { type: 'name', text: name },
+                { type: 'contents', text: contents },
+            ]
+
+            let offsetY = 0
+            rects.forEach((rect) => {
+                const height = rect.text.length * 12 + 16
+                X6.ObjectExt.setByPath(
+                    others,
+                    `attrs/${rect.type}-text/text`,
+                    rect.text.join('\n'),
+                )
+                X6.ObjectExt.setByPath(others, `attrs/${rect.type}-rect/height`, height)
+                X6.ObjectExt.setByPath(
+                    others,
+                    `attrs/${rect.type}-rect/transform`,
+                    'translate(0,' + offsetY + ')',
+                )
+                offsetY += height
+            })
+
+            others.size = { width: 160, height: offsetY }
+
+            return others
+        },
+    },
+    true,
+    )
+
+    // #endregion
+
+    //可编辑内容工具 - begin
+    class EditableCellTool extends X6.ToolsView.ToolItem {
+
+        render() {
+            super.render()
+            const cell = this.cell
+            let x = 0
+            let y = 0
+            let width = 0
+            let height = 0
+
+            if (cell.isNode()) {
+            const position = cell.position()
+            const size = cell.size()
+            const pos = this.graph.localToGraph(position)
+            const zoom = this.graph.zoom()
+            x = pos.x
+            y = pos.y
+            width = size.width * zoom
+            height = size.height * zoom
+            } else {
+            x = this.options.x - 40
+            y = this.options.y - 20
+            width = 80
+            height = 40
+            }
+
+            const editorParent = X6.ToolsView.createElement('div', false)
+            editorParent.style.position = 'absolute'
+            editorParent.style.left = `${x}px`
+            editorParent.style.top = `${y}px`
+            editorParent.style.width = `${width}px`
+            editorParent.style.height = `${height}px`
+            editorParent.style.display = 'flex'
+            editorParent.style.alignItems = 'center'
+            editorParent.style.textAlign = 'center'
+
+            this.editorContent = X6.ToolsView.createElement('div', false)
+            this.editorContent.contentEditable = 'true'
+            this.editorContent.style.width = '100%'
+            this.editorContent.style.outline = 'none'
+            this.editorContent.style.backgroundColor = cell.isEdge() ? '#fff' : ''
+            this.editorContent.style.border = cell.isEdge() ? '1px solid #ccc' : 'none'
+            editorParent.appendChild(this.editorContent)
+            this.container.appendChild(editorParent)
+
+            this.init()
+
+            return this
+        }
+
+        init = () => {
+            const cell = this.cell
+            if (cell.isNode()) {
+                //需要优化：根据点击位置，判断修改哪个数值
+                const value = cell.attr('contents-text/text')
+            if (value) {
+                this.editorContent.innerText = value
+                cell.attr('text/style/display', 'none')
+            }
+            }
+            setTimeout(() => {
+                this.editorContent.focus()
+                this.editorContent.pos
+            })
+            document.addEventListener('mousedown', this.onMouseDown)
+        }
+
+        onMouseDown = (e) => {
+            if (e.target !== this.editorContent) {
+            const cell = this.cell
+            const value = this.editorContent.innerText
+            cell.removeTools()
+            cell.addTools([
+            {
+                name: 'button',
+                args: {
+                    markup: [
+                    {
+                        tagName: 'circle',
+                        selector: 'button',
+                        attrs: {
+                        r: 14,
+                        stroke: '#fe854f',
+                        strokeWidth: 2,
+                        fill: 'white',
+                        cursor: 'pointer',
+                        },
+                    },
+                    
+                    ],
+                    x: '100%',
+                    y: '100%',
+                    offset: { x: -20, y: -20 },
+
+                    onClick({ cell, e, x, y }) {
+                        const p = graph.clientToGraph(e.clientX, e.clientY)
+                        cell.addTools([
+                            {
+                                name: 'editableCell',
+                                args: {
+                                    x: p.x,
+                                    y: p.y,
+                                },
+                            },
+                        ])
+                
+                    },
+                },
+            },
+                    ])
+            if (cell.isNode()) {
+                //cell.attr('text/textWrap/text', value)
+                cell.attr('contents-text/text', value)
+                cell.attr('text/style/display', '')
+            } else if (cell.isEdge()) {
+                //增加内容，需要优化：寻找是否有数值，有的话改变
+                cell.appendLabel({
+                attrs: {
+                    text: {
+                        text: value,
+                    }
+                },
+                position: {
+                    distance: this.getDistance(),
+                }
+                })
+            }
+            document.removeEventListener('mousedown', this.onMouseDown)
+            }
+        }
+
+        getDistance() {
+            const cell = this.cell
+            if (cell.isEdge()) {
+                const targetPoint = cell.getTargetPoint()
+                const cross = cell.getSourceNode().getBBox().intersectsWithLineFromCenterToPoint(targetPoint)
+                const p = new X6.Point(this.options.x, this.options.y)
+                return p.distance(cross)
+            }
+            return 0
+        }
+    }
+
+    EditableCellTool.config({
+        tagName: 'div',
+        isSVGElement: false,
+    })
+
+    X6.Graph.registerEdgeTool('editableCell', EditableCellTool, true) //增加到边
+    X6.Graph.registerNodeTool('editableCell', EditableCellTool, true) //增加到点
+    //#可编辑内容工具 - end
+
+    const graph = new X6.Graph({
+        container: document.getElementById('container'),
+        width: 800,
+        height: 600,
+    })
+    
+
+    graph.on('cell:dblclick', ({ cell, e, x, y }) => {
+        //需要优化：根据点击位置，判断修改哪个数值
+        const p = graph.clientToGraph(e.clientX, e.clientY)
+        cell.addTools([
+            {
+                name: 'editableCell',
+                args: {
+                    x: p.x,
+                    y: p.y,
+                },
+            },
+        ])
+    })
+    
+    const source = graph.addNode({
+        id: 1,
+        shape: "regexNode",
+        name: [
+        "重复",
+        ],
+        params: [
+        "次数：3"
+        ],
+        contents: [
+        "重复字符串：",
+        "xxxxx"
+        ],
+        position: {
+            x: 300,
+            y: 40
+        }
+    })
+
+    const target = graph.addNode({
+        id: 2,
+        shape: "regexSimpleNode",
+        name: [
+        "字符串",
+        ],
+        contents: [
+        "简单的字符串",
+        ],
+        position: {
+            x: 300,
+            y: 140
+        }
+    })
+
+    graph.addEdge({
+        source,
+        target,
+        attrs: {
+            line: {
+            stroke: '#a0a0a0',
+            strokeWidth: 1,
+            },
+        },
+    })
+
+
+</script>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>olllo.top</title>
+    <meta name="keywords" content="EXCEL,CSV,TXT,Data.olllo数据助手">
+    <meta name="description" content="Data.olllo数据助手是EXCEL,CSV,TXT数据文件的处理工具">
+    <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/content/site.css">
+    <link rel="shortcut icon" type="image/x-icon" href="http://olllo.top/static/favicon.ico">
+    <script src="/static/scripts/modernizr-2.6.2.js"></script>
+    <script data-ad-client="ca-pub-5775651504310254" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "https://hm.baidu.com/hm.js?d09c10630ba16bcc0ae7546ac53e72d6";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();
+    </script>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+          </button><a href="/" class="navbar-brand">olllo.top</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">首页</a>
+            </li>
+            <li><a href="/about.html">关于我们</a>
+            </li>
+            <li><a href="/contact.html">联系我们            </a>
+            </li>
+            <li><a href="/download.html">下载软件</a>
+            </li>
+            <li><a href="/home-en.html">English</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container body-content">
+<div class="jumbotron">
+  <h1>只要会使用鼠标，你就能做数据处理</h1>
+  <p class="lead">软件的设计总有个目标，总有个最初的想法，作者开发软件也不例外，初始想法是，让每个人都能使用计算机强大的数据处理功能，不需要重新学习计算机语言，不需要编程，直接打开文件，直接点击功能，就得到想要的结果，直接点，大家时间都很宝贵，别要这样做那样做的，很烦，对吧！ </p>
+  <p><a href="/download.html" class="btn btn-primary btn-large">下载Data.olllo数据助手 &raquo;</a>
+  </p>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Data.olllo数据助手</h2>
+    <h4>如果你需要以下的处理，下载软件，打开文件，选择关键词，点击功能键，直接来：</h4>
+    <p>1、	读取EXCEL、CVS、TXT格式的数据文件，并互转格式，大文件的读取，超大文件的分割存储</p>
+    <p>2、	方便的进行EXCEL、CVS、TXT数据文件的列处理，如删除、修改列数据</p>
+    <p>3、	方便的进行EXCEL、CVS、TXT数据文件的行处理，条件选取行数据</p>
+    <p>4、	方便的进行EXCEL、CVS、TXT数据文件的数据处理，如统计，快速描述，排序</p>
+    <p>5、	方便的进行EXCEL、CVS、TXT数据文件的合并，剔重，找出重复等</p>
+    <p>6、	这是一款处理EXCEL、CVS、TXT数据文件的好软件，好工具</p>
+    <p><a href="/download.html" class="btn btn-default">马上下载 &raquo;</a>
+    </p>
+  </div>
+  <div class="col-md-6">
+    <h2>更多介绍</h2>
+    <h4>Data.olllo数据助手是基于Python的一种工具</h4>
+    <p>1、 目前用作数据分析的Python语言，有着非常强大的功能，但是对于使用者和来说，却没有一个可视化的单机工具，而数据小助手就是这样的一个工具</p>
+    <p>2、 该工具是为了方便界面化解决数据分析任务而创建的</p>
+    <p>3、 其纳入了大量优秀的库和一些标准的数据模型</p>
+    <p>4、 提供了一个简单快捷操作大型数据集的可视化界面</p>
+    <p>5、 使用了大量能使我们快速便捷地处理数据的函数和方法</p>
+    <p>6、 你很快就会发现，它能成为你的简单快捷而高效进行数据分析的好助手</p>
+    <p><a href="https://zhuanlan.zhihu.com/c_1264934362916798464" class="btn btn-default">了解Data.olllo数据助手 &raquo;</a>
+    </p>
+  </div>
+</div>
+<div class="row">
+  <hr/>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div id="adlink" class="col-md-offset-1">
+      <script src="http://wm.lrswl.com/page/s.php?s=311795&w=950&h=90"></script>
+    </div>
+  </div>
+</div>
+<script src="/static/scripts/jquery-1.10.2.js"></script>
+<script src="/static/scripts/ad-adjust.js"></script>
+<script src="/static/scripts/ad-get-link.js"></script>
+<div style="display:none;" class="hidelink"><a id="data.olllo_version_1.0" href="http://www.olllo.top/download.html?version=data.olllo_version_1.0">olllo.top历史版本1.0推荐的更新下载链接</a>
+</div>
+      <hr>
+      <footer>
+        <p>&copy; 2020 - olllo is looking @ U ...</p>
+      </footer>
+    </div>
+    <script src="/static/scripts/jquery-1.10.2.js"></script>
+    <script src="/static/scripts/bootstrap.js"></script>
+    <script src="/static/scripts/respond.js"></script>
+  </body>
+</html>

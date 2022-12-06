@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">	
+<url>
+<loc>http://olllo.top</loc>
+<priority>1.00</priority>
+<lastmod>2020-09-02</lastmod>
+<changefreq>weekly</changefreq>
+</url>
+<url>
+<loc>http://olllo.top/contact-en.html</loc>
+<priority>0.5</priority>
+<lastmod>2020-09-02</lastmod>
+<changefreq>weekly</changefreq>
+</url>
+<url>
+<loc>http://olllo.top/about.html</loc>
+<priority>0.5</priority>
+<lastmod>2020-09-02</lastmod>
+<changefreq>weekly</changefreq>
+</url>
+<url>
+<loc>http://olllo.top/download.html</loc>
+<priority>0.5</priority>
+<lastmod>2020-09-02</lastmod>
+<changefreq>weekly</changefreq>
+</url>
+<url>
+<loc>http://olllo.top/documents.html</loc>
+<priority>0.5</priority>
+<lastmod>2020-09-02</lastmod>
+<changefreq>weekly</changefreq>
+</url>
+<url>
+<loc>http://olllo.top/about-en.html</loc>
+<priority>0.5</priority>
+<lastmod>2020-09-02</lastmod>
+<changefreq>weekly</changefreq>
+</url>
+<url>
+<loc>http://olllo.top/contact.html</loc>
+<priority>0.5</priority>
+<lastmod>2020-09-02</lastmod>
+<changefreq>weekly</changefreq>
+</url>
+<url>
+<loc>http://olllo.top/home-en.html</loc>
+<priority>0.5</priority>
+<lastmod>2020-09-02</lastmod>
+<changefreq>weekly</changefreq>
+</url>
+</urlset>
+

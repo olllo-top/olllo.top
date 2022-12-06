@@ -1,0 +1,234 @@
+import React, { useEffect, useState, useRef } from 'react';
+import { Tabs, Row, Col, Input, Slider, Select, Button, Divider } from 'antd';
+import FlowGraph from '@/pages/Graph';
+import { Cell, Edge } from '@antv/x6';
+import { useSetState } from '@/hooks';
+import { regexConnectType} from './../../../Graph/config';
+
+const { TabPane } = Tabs;
+
+export enum lineAttributes {
+  stroke = 'line/stroke',
+  strokeWidth = 'line/strokeWidth',
+  strokeDasharray = 'line/strokeDasharray',
+
+  tarrowWidth = 'line/targetMarker/width',
+  tarrowHeight = 'line/targetMarker/height',
+
+  connectType = 'regex/type',
+}
+interface IProps {
+  id: string;
+}
+interface EdgeAttrs {
+  stroke: string;
+  strokeWidth: number;
+  connector: string;
+  strokeDasharray: number;
+
+  connectType: string;
+}
+
+export interface labelAttrsType {
+  fontSize: number;
+  fill: string;
+  text: string;
+}
+export const labelsDefaults = {
+  fontSize: 12,
+  fill: '#666',
+  text: '',
+};
+
+export const filterGetLabels = (labelArr: NonNullable<Edge.Label[]>) => {
+  if (!labelArr.length) return labelsDefaults;
+  return labelArr[0].attrs!.label;
+};
+
+export const handleGetLabels = (
+  labelattrs: Partial<labelAttrsType>,
+  labelsDefaults: labelAttrsType,
+) => {
+  return {
+    attrs: { label: Object.assign({}, labelsDefaults, labelattrs) },
+  };
+};
+
+export default function (props: IProps) {
+  const { id } = props;
+  const [labelattrs, setLabelattrs] =
+    useSetState<labelAttrsType>(labelsDefaults);
+  const [attrs, setAttrs] = useState<EdgeAttrs>({
+    stroke: '#5F95FF',
+    strokeWidth: 1,
+    connector: 'normal',
+    strokeDasharray: 0,
+
+    connectType: regexConnectType.join,
+  });
+  const cellRef = useRef<Cell>();
+
+  useEffect(() => {
+    if (id) {
+      const { graph } = FlowGraph;
+      const cell = graph.getCellById(id) as Edge;
+      if (!cell || !cell.isEdge()) {
+        return;
+      }
+      cellRef.current = cell as Edge;
+      const connector = cell.getConnector() || {
+        name: 'normal',
+      };
+      const getLabels = filterGetLabels(cell.getLabels());
+      setAttr('stroke', cell.attr(lineAttributes.stroke));
+      setAttr('strokeWidth', cell.attr(lineAttributes.strokeWidth));
+      setAttr(
+        'strokeDasharray',
+        cell.attr(lineAttributes.strokeDasharray) || 0,
+      );
+      setAttr('connector', connector.name);
+      setLabelattrs(getLabels);
+
+      const connectType = cell.attr(lineAttributes.connectType);
+      // console.log('id',id,'connectType',connectType);
+      setAttr('connectType', connectType);
+      
+    }
+  }, [id]);
+
+  const setAttr = (key: string, val: any) => {
+    setAttrs((prev) => ({
+      ...prev,
+      [key]: val,
+    }));
+  };
+
+  const onStrokeChange = (e: React.FocusEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setAttr('stroke', val);
+    cellRef.current!.attr(lineAttributes.stroke, val);
+  };
+
+  const onStrokeWidthChange = (
+    val: number,
+    path: lineAttributes,
+    typeKey: string,
+  ) => {
+    setAttr(typeKey, val);
+    cellRef.current!.attr(path, val);
+  };
+
+  const onConnectorChange = (val: string) => {
+    setAttr('connector', val);
+    const cell = cellRef.current as Edge;
+    cell.setConnector(val);
+  };
+
+  const textChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    textKey: string,
+    sliderVal?: number,
+  ) => {
+    const val = sliderVal ? sliderVal : e.target.value;
+    const cell = cellRef.current as Edge;
+    setLabelattrs({ [textKey]: val });
+    cell.setLabels([handleGetLabels({ [textKey]: val }, labelattrs)]);
+  };
+
+  const removeConnector = () => {
+    const cell = cellRef.current as Edge;
+    cell.disconnect();
+  };
+
+  const typeChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    textKey: string,
+    sliderVal?: number,
+  ) => {
+    const val = sliderVal ? sliderVal : e.target.value;
+    const cell = cellRef.current as Edge;
+    setLabelattrs({ [textKey]: val });
+    cell.setLabels([handleGetLabels({ [textKey]: val }, labelattrs)]);
+  };
+
+  
+  const onConnectTypeChange = (val: string) => {
+    setAttr('connectType', val);
+    // console.log('改变线型：',val)
+    
+    const cell = cellRef.current as Edge;
+
+    if (val === regexConnectType.or) {
+      // 改变类型
+      cellRef.current!.attr(lineAttributes.connectType, regexConnectType.or);
+      // 改变文本
+      // setLabelattrs({ 'text': '或' });
+      // 改变标签
+      // cell.setLabels([handleGetLabels({ 'text': 'or' }, labelattrs)]);
+
+      // 改变间距，变虚线
+      cellRef.current!.attr(lineAttributes.strokeDasharray, 5);
+
+      // 改变箭头
+      cellRef.current!.attr(lineAttributes.tarrowWidth, 1);
+      cellRef.current!.attr(lineAttributes.tarrowHeight, 1);
+    }
+    else {
+      // 改变类型
+      cellRef.current!.attr(lineAttributes.connectType, regexConnectType.join);
+      // 改变文本
+      // setLabelattrs({ 'text': '连接' });
+      // 改变标签
+      // cell.setLabels([handleGetLabels({ 'text': '连接' }, labelattrs)]);
+
+      cellRef.current!.attr(lineAttributes.strokeDasharray, 0);
+
+      // 改变箭头
+      cellRef.current!.attr(lineAttributes.tarrowWidth, 8);
+      cellRef.current!.attr(lineAttributes.tarrowHeight, 8);
+    }
+
+  };
+
+  return (
+    <Tabs defaultActiveKey="1">
+      <TabPane tab="线条属性" key="1">
+        <Row align="middle">
+          <Col span={8}>当前类型</Col>
+          <Col span={14}>
+            <Select
+              style={{ width: '100%' }}
+              value={attrs.connectType}
+              onChange={onConnectTypeChange}
+            >
+              <Select.Option value="join">连接</Select.Option>
+              <Select.Option value="or">或</Select.Option>
+            </Select>
+          </Col>
+        </Row>
+
+        <Divider></Divider>
+        <Row align="middle">
+          <Col>
+            {'说明：线条的类型有两种，一种是“连接”，一种是“或”，“连接”表示所连的元素有先后顺序，“或”表示所连元素是并列关系。注意：元素在同一框架内，没有连线，默认表示为“或”的关系。'}
+          </Col>
+        </Row>
+
+        <Divider></Divider>
+        <Row align="middle">
+          <Col span={10}>删除该线条</Col>
+          <Col span={14}>
+            <Button
+              type="primary"
+              size="small"
+              danger
+              onClick={removeConnector}
+            >
+              删除
+            </Button>
+          </Col>
+        </Row>
+      </TabPane>
+    </Tabs>
+  );
+}
